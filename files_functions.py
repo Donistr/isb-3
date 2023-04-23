@@ -4,6 +4,11 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key, lo
 
 
 def read_settings(file_name: str = 'settings.json') -> dict:
+    """
+    функция считывает файл настроек
+    :param file_name: название файла с настройками
+    :return: настройки
+    """
     settings = None
     try:
         with open(file_name) as json_file:
@@ -14,6 +19,12 @@ def read_settings(file_name: str = 'settings.json') -> dict:
 
 
 def save_asymmetric_private_key(private_key, settings_file_name: str = 'settings.json') -> None:
+    """
+    функция сохраняет приватный ключ для ассиметричного шифрования
+    :param private_key: приватный ключ
+    :param settings_file_name: название файла с настройками
+    :return: ничего
+    """
     settings = read_settings(settings_file_name)
     private_key_file_name = settings['secret_key']
     try:
@@ -26,6 +37,11 @@ def save_asymmetric_private_key(private_key, settings_file_name: str = 'settings
 
 
 def read_asymmetric_private_key(settings_file_name: str = 'settings.json'):
+    """
+    функция считывает сохранённый ранее приватный ключ для ассиметричного шифрования
+    :param settings_file_name: название файла с настройками
+    :return: приватный ключ
+    """
     settings = read_settings(settings_file_name)
     private_key_file_name = settings['secret_key']
     private_key = None
@@ -39,6 +55,12 @@ def read_asymmetric_private_key(settings_file_name: str = 'settings.json'):
 
 
 def save_asymmetric_public_key(public_key, settings_file_name: str = 'settings.json') -> None:
+    """
+    функция сохраняет публичный ключ для ассиметричного шифрования
+    :param public_key: публичный ключ
+    :param settings_file_name: название файла с настройками
+    :return: ничего
+    """
     settings = read_settings(settings_file_name)
     public_key_file_name = settings['public_key']
     try:
@@ -50,6 +72,11 @@ def save_asymmetric_public_key(public_key, settings_file_name: str = 'settings.j
 
 
 def read_asymmetric_public_key(settings_file_name: str = 'settings.json'):
+    """
+    функция считывает сохранённый ранее публичный ключ для ассиметричного шифрования
+    :param settings_file_name: название файла с настройками
+    :return: публичный ключ
+    """
     settings = read_settings(settings_file_name)
     public_key_file_name = settings['public_key']
     public_key = None
@@ -63,6 +90,13 @@ def read_asymmetric_public_key(settings_file_name: str = 'settings.json'):
 
 
 def save_key(key: bytes, file_name: str, settings_file_name: str = 'settings.json') -> None:
+    """
+    функция сохраняет ключ в файл file_name
+    :param key: ключ
+    :param file_name: название файла
+    :param settings_file_name: название файла с настройками
+    :return: ничего
+    """
     settings = read_settings(settings_file_name)
     key_file_name = settings[file_name]
     try:
@@ -73,6 +107,12 @@ def save_key(key: bytes, file_name: str, settings_file_name: str = 'settings.jso
 
 
 def read_key(file_name: str, settings_file_name: str = 'settings.json') -> bytes:
+    """
+    функция считывает ранее сохранённый ключ из файла file_name
+    :param file_name: название файла
+    :param settings_file_name: название файла с настройками
+    :return: ключ
+    """
     settings = read_settings(settings_file_name)
     key_file_name = settings[file_name]
     key = None
@@ -85,6 +125,12 @@ def read_key(file_name: str, settings_file_name: str = 'settings.json') -> bytes
 
 
 def read_text(file_name: str, settings_file_name: str = 'settings.json') -> bytes:
+    """
+    функция считывает текстовый файл
+    :param file_name: название файла
+    :param settings_file_name: название файла с настройками
+    :return: текст из файла
+    """
     settings = read_settings(settings_file_name)
     text_file_name = settings[file_name]
     text = None
@@ -97,6 +143,13 @@ def read_text(file_name: str, settings_file_name: str = 'settings.json') -> byte
 
 
 def write_text(text: bytes, file_name: str, settings_file_name: str = 'settings.json') -> None:
+    """
+    функция записывает текст в файл
+    :param text: текст
+    :param file_name: название файла
+    :param settings_file_name: название файла с настройками
+    :return: ничего
+    """
     settings = read_settings(settings_file_name)
     text_file_name = settings[file_name]
     try:
