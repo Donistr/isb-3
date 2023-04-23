@@ -167,6 +167,6 @@ def write_text(text: bytes, file_name: str, settings_file_name: str = 'settings.
     try:
         with open(text_file_name, mode='wb') as text_file:
             text_file.write(text)
-        logging.info(f'Файл {text_file_name} прочитан')
+        logging.info(f'Текст записан в файл {text_file_name}')
     except OSError as err:
         logging.info(f'{err} - ошибка при записи в файл {text_file_name}')
