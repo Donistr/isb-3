@@ -13,7 +13,7 @@ def read_settings(file_name: str = 'settings.json') -> dict:
     return settings
 
 
-def save_asymmetric_private_key(private_key: bytes, settings_file_name: str = 'settings.json') -> None:
+def save_asymmetric_private_key(private_key, settings_file_name: str = 'settings.json') -> None:
     settings = read_settings(settings_file_name)
     private_key_file_name = settings['secret_key']
     try:
@@ -25,7 +25,7 @@ def save_asymmetric_private_key(private_key: bytes, settings_file_name: str = 's
         print(err)
 
 
-def read_asymmetric_private_key(settings_file_name: str = 'settings.json') -> bytes:
+def read_asymmetric_private_key(settings_file_name: str = 'settings.json'):
     settings = read_settings(settings_file_name)
     private_key_file_name = settings['secret_key']
     private_key = None
@@ -38,7 +38,7 @@ def read_asymmetric_private_key(settings_file_name: str = 'settings.json') -> by
     return private_key
 
 
-def save_asymmetric_public_key(public_key: bytes, settings_file_name: str = 'settings.json') -> None:
+def save_asymmetric_public_key(public_key, settings_file_name: str = 'settings.json') -> None:
     settings = read_settings(settings_file_name)
     public_key_file_name = settings['public_key']
     try:
@@ -49,9 +49,9 @@ def save_asymmetric_public_key(public_key: bytes, settings_file_name: str = 'set
         print(err)
 
 
-def read_asymmetric_public_key(settings_file_name: str = 'settings.json') -> bytes:
+def read_asymmetric_public_key(settings_file_name: str = 'settings.json'):
     settings = read_settings(settings_file_name)
-    public_key_file_name = settings['secret_key']
+    public_key_file_name = settings['public_key']
     public_key = None
     try:
         with open(public_key_file_name, 'rb') as pem_in:
@@ -96,7 +96,7 @@ def read_text(file_name: str, settings_file_name: str = 'settings.json') -> byte
     return text
 
 
-def write_text(text: bytes, file_name: str = 'decrypted_file', settings_file_name: str = 'settings.json') -> None:
+def write_text(text: bytes, file_name: str, settings_file_name: str = 'settings.json') -> None:
     settings = read_settings(settings_file_name)
     text_file_name = settings[file_name]
     try:
