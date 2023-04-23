@@ -4,6 +4,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key, lo
 
 
 def read_settings(file_name: str = 'settings.json') -> dict:
+    settings = None
     try:
         with open(file_name) as json_file:
             settings = json.load(json_file)
@@ -61,64 +62,45 @@ def read_asymmetric_public_key(settings_file_name: str = 'settings.json') -> byt
     return public_key
 
 
-def save_symmetric_key(symmetric_key: bytes, settings_file_name: str = 'settings.json') -> None:
+def save_key(key: bytes, file_name: str, settings_file_name: str = 'settings.json') -> None:
     settings = read_settings(settings_file_name)
-    symmetric_key_file_name = settings['symmetric_key']
+    key_file_name = settings[file_name]
     try:
-        with open(symmetric_key_file_name, 'wb') as key_file:
-            key_file.write(symmetric_key)
+        with open(key_file_name, 'wb') as file:
+            file.write(key)
     except OSError as err:
         print(err)
 
 
-def read_symmetric_key(settings_file_name: str = 'settings.json') -> bytes:
+def read_key(file_name: str, settings_file_name: str = 'settings.json') -> bytes:
     settings = read_settings(settings_file_name)
-    symmetric_key_file_name = settings['symmetric_key']
+    key_file_name = settings[file_name]
+    key = None
     try:
-        with open(symmetric_key_file_name, mode='rb') as key_file:
-            key = key_file.read()
+        with open(key_file_name, mode='rb') as file:
+            key = file.read()
     except OSError as err:
         print(err)
     return key
 
 
-def save_nonce(symmetric_key: bytes, settings_file_name: str = 'settings.json') -> None:
+def read_text(file_name: str, settings_file_name: str = 'settings.json') -> bytes:
     settings = read_settings(settings_file_name)
-    symmetric_key_file_name = settings['nonce']
+    text_file_name = settings[file_name]
+    text = None
     try:
-        with open(symmetric_key_file_name, 'wb') as key_file:
-            key_file.write(symmetric_key)
-    except OSError as err:
-        print(err)
-
-
-def read_nonce(settings_file_name: str = 'settings.json') -> bytes:
-    settings = read_settings(settings_file_name)
-    nonce_file_name = settings['nonce']
-    try:
-        with open(nonce_file_name, mode='rb') as nonce_file:
-            nonce = nonce_file.read()
-    except OSError as err:
-        print(err)
-    return nonce
-
-
-def read_encrypted_text(settings_file_name: str = 'settings.json') -> bytes:
-    settings = read_settings(settings_file_name)
-    encrypted_text_file_name = settings['encrypted_file']
-    try:
-        with open(encrypted_text_file_name, mode='rb') as text_file:
+        with open(text_file_name, mode='rb') as text_file:
             text = text_file.read()
     except OSError as err:
         print(err)
     return text
 
 
-def write_decrypted_text(decrypted_text: bytes, settings_file_name: str = 'settings.json') -> None:
+def write_text(text: bytes, file_name: str = 'decrypted_file', settings_file_name: str = 'settings.json') -> None:
     settings = read_settings(settings_file_name)
-    decrypted_text_file_name = settings['decrypted_file']
+    text_file_name = settings[file_name]
     try:
-        with open(decrypted_text_file_name, mode='wb') as text_file:
-            text_file.write(decrypted_text)
+        with open(text_file_name, mode='wb') as text_file:
+            text_file.write(text)
     except OSError as err:
         print(err)
