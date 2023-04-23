@@ -1,6 +1,10 @@
 from os import urandom
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
+import logging
+
+logger = logging.getLogger()
+logger.setLevel('INFO')
 
 
 def generate_symmetric_keys() -> tuple:
@@ -10,6 +14,7 @@ def generate_symmetric_keys() -> tuple:
     """
     key = urandom(32)
     nonce = urandom(16)
+    logging.info(f'Сгенерированы ключи для симметричного шифрования')
     return key, nonce
 
 
@@ -26,6 +31,7 @@ def encrypt_symmetric(text: bytes, key: bytes, nonce: bytes) -> bytes:
     cipher = Cipher(algorithms.ChaCha20(key, nonce), mode=None)
     encryptor = cipher.encryptor()
     encrypted_text = encryptor.update(padded_text) + encryptor.finalize()
+    logging.info(f'Текст зашифрован алгоритмом симметричного шифрования ChaCha20')
     return encrypted_text
 
 
@@ -42,4 +48,5 @@ def decrypt_symmetric(text: bytes, key: bytes, nonce: bytes) -> bytes:
     decrypted_text = decryptor.update(text) + decryptor.finalize()
     unpadder = padding.ANSIX923(64).unpadder()
     unpadded_decrypted_text = unpadder.update(decrypted_text) + unpadder.finalize()
+    logging.info(f'Текст, зашифрованный алгоритмом симметричного шифрования ChaCha20, расшифрован')
     return unpadded_decrypted_text
