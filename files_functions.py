@@ -98,43 +98,6 @@ def read_asymmetric_public_key(settings_file_name: str = 'settings.json'):
     return public_key
 
 
-def save_key(key: bytes, file_name: str, settings_file_name: str = 'settings.json') -> None:
-    """
-    функция сохраняет ключ в файл file_name
-    :param key: ключ
-    :param file_name: название файла
-    :param settings_file_name: название файла с настройками
-    :return: ничего
-    """
-    settings = read_settings(settings_file_name)
-    key_file_name = settings[file_name]
-    try:
-        with open(key_file_name, 'wb') as file:
-            file.write(key)
-        logging.info(f'Ключ сохранён в файл {key_file_name}')
-    except OSError as err:
-        logging.info(f'{err} - ошибка при сохранении ключа в файл {key_file_name}')
-
-
-def read_key(file_name: str, settings_file_name: str = 'settings.json') -> bytes:
-    """
-    функция считывает ранее сохранённый ключ из файла file_name
-    :param file_name: название файла
-    :param settings_file_name: название файла с настройками
-    :return: ключ
-    """
-    settings = read_settings(settings_file_name)
-    key_file_name = settings[file_name]
-    key = None
-    try:
-        with open(key_file_name, mode='rb') as file:
-            key = file.read()
-        logging.info(f'Ключ считан из файла {key_file_name}')
-    except OSError as err:
-        logging.info(f'{err} - ошибка при чтении ключа из файла {key_file_name}')
-    return key
-
-
 def read_text(file_name: str, settings_file_name: str = 'settings.json') -> bytes:
     """
     функция считывает текстовый файл
