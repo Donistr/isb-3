@@ -19,7 +19,7 @@ def read_settings(file_name: str = 'settings.json') -> dict:
             settings = json.load(json_file)
         logging.info(f'Настройки считаны из файла {file_name}')
     except OSError as err:
-        logging.info(f'{err} - ошибка при чтении настроек из файла {file_name}')
+        logging.warning(f'{err} - ошибка при чтении настроек из файла {file_name}')
     return settings
 
 
@@ -75,7 +75,7 @@ class FileManager:
                                                             encryption_algorithm=serialization.NoEncryption()))
             logging.info(f'Приватный ключ сохранён в файл {self.__secret_key_path}')
         except OSError as err:
-            logging.info(f'{err} - ошибка при сохранении приватного ключа {self.__secret_key_path}')
+            logging.warning(f'{err} - ошибка при сохранении приватного ключа {self.__secret_key_path}')
 
     def read_asymmetric_private_key(self):
         """
@@ -89,7 +89,7 @@ class FileManager:
             private_key = load_pem_private_key(private_bytes, password=None)
             logging.info(f'Приватный ключ считан из файла {self.__secret_key_path}')
         except OSError as err:
-            logging.info(f'{err} - ошибка при чтении приватного ключа из файла {self.__secret_key_path}')
+            logging.warning(f'{err} - ошибка при чтении приватного ключа из файла {self.__secret_key_path}')
         return private_key
 
     def save_asymmetric_public_key(self, public_key) -> None:
@@ -104,7 +104,7 @@ class FileManager:
                                                          format=serialization.PublicFormat.SubjectPublicKeyInfo))
             logging.info(f'Публичный ключ сохранён в файл {self.__public_key_path}')
         except OSError as err:
-            logging.info(f'{err} - ошибка при чтении публичного ключа из файла {self.__public_key_path}')
+            logging.warning(f'{err} - ошибка при чтении публичного ключа из файла {self.__public_key_path}')
 
     def read_asymmetric_public_key(self):
         """
@@ -118,7 +118,7 @@ class FileManager:
             public_key = load_pem_public_key(private_bytes)
             logging.info(f'Публичный ключ считан из файла {self.__public_key_path}')
         except OSError as err:
-            logging.info(f'{err} - ошибка при чтении публичного ключа из файла {self.__public_key_path}')
+            logging.warning(f'{err} - ошибка при чтении публичного ключа из файла {self.__public_key_path}')
         return public_key
 
     @staticmethod
@@ -134,7 +134,7 @@ class FileManager:
                 text = text_file.read()
             logging.info(f'Файл {file_path} прочитан')
         except OSError as err:
-            logging.info(f'{err} - ошибка при чтении файла {file_path}')
+            logging.warning(f'{err} - ошибка при чтении файла {file_path}')
         return text
 
     @staticmethod
@@ -150,4 +150,4 @@ class FileManager:
                 text_file.write(text)
             logging.info(f'Текст записан в файл {file_path}')
         except OSError as err:
-            logging.info(f'{err} - ошибка при записи в файл {file_path}')
+            logging.warning(f'{err} - ошибка при записи в файл {file_path}')
