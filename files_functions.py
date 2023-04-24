@@ -7,25 +7,25 @@ logger = logging.getLogger()
 logger.setLevel('INFO')
 
 
-def read_settings(file_name: str = 'settings.json') -> dict:
-    """
-    функция считывает файл настроек
-    :param file_name: название файла с настройками
-    :return: настройки
-    """
-    settings = None
-    try:
-        with open(file_name) as json_file:
-            settings = json.load(json_file)
-        logging.info(f'Настройки считаны из файла {file_name}')
-    except OSError as err:
-        logging.warning(f'{err} - ошибка при чтении настроек из файла {file_name}')
-    return settings
-
-
 class FileManager:
+    @staticmethod
+    def read_settings(file_name: str = 'settings.json') -> dict:
+        """
+        метод считывает файл настроек
+        :param file_name: название файла с настройками
+        :return: настройки
+        """
+        settings = None
+        try:
+            with open(file_name) as json_file:
+                settings = json.load(json_file)
+            logging.info(f'Настройки считаны из файла {file_name}')
+        except OSError as err:
+            logging.warning(f'{err} - ошибка при чтении настроек из файла {file_name}')
+        return settings
+
     def __init__(self, settings_file_name: str = 'settings.json'):
-        settings = read_settings(settings_file_name)
+        settings = self.read_settings(settings_file_name)
         self.__initial_file_path = settings['initial_file']
         self.__encrypted_file_path = settings['encrypted_file']
         self.__decrypted_file_path = settings['decrypted_file']
